@@ -1,0 +1,38 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="navigatingTo" class="bg-gray-100">
+    <ActionBar title="Image Organizer" class="bg-blue-500 text-white">
+        <ActionItem tap="{{ onAddImage }}" ios.position="right" android.position="actionBar">
+            <Label text="+" class="text-2xl font-bold p-2" />
+        </ActionItem>
+    </ActionBar>
+
+    <GridLayout rows="*, auto">
+        <ScrollView row="0">
+            <WrapLayout id="imageContainer" class="p-2">
+                <Repeater items="{{ images }}">
+                    <Repeater.itemTemplate>
+                        <GridLayout class="m-1 bg-white rounded-lg shadow" width="150" height="150">
+                            <Image src="{{ uri }}" 
+                                  stretch="aspectFit"
+                                  opacity="{{ opacity }}"
+                                  rotate="{{ rotation }}"
+                                  class="rounded-lg" />
+                            <Label text="{{ notes }}"
+                                   class="text-xs p-1 bg-black bg-opacity-50 text-white"
+                                   verticalAlignment="bottom"
+                                   visibility="{{ notes ? 'visible' : 'collapsed' }}" />
+                        </GridLayout>
+                    </Repeater.itemTemplate>
+                </Repeater>
+            </WrapLayout>
+        </ScrollView>
+
+        <StackLayout row="1" class="bg-white p-4 border-t border-gray-200" visibility="{{ selectedImage ? 'visible' : 'collapsed' }}">
+            <Slider value="{{ selectedImage.opacity }}" 
+                    minValue="0" 
+                    maxValue="1" 
+                    class="m-2" />
+            <Button text="Rotate" tap="{{ onRotateImage }}" class="btn btn-primary m-2" />
+            <Button text="Delete" tap="{{ onDeleteImage }}" class="btn btn-danger m-2" />
+        </StackLayout>
+    </GridLayout>
+</Page>
